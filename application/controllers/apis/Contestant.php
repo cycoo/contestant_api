@@ -111,10 +111,15 @@ class Contestant extends CI_Controller {
 		$result=$this->contestant->delete_contestant($id);
 		if($result){
 			$this->session->set_flashdata('success','The requested contestant deleted successfully');
+			$this->httpresponse->addData('sucess','Deleted Successfully');
+        $this->httpresponse->deliver(); exit; 
 		}else{
 			$this->session->set_flashdata('error','Unable to delete the requested Contestant');
+			$this->httpresponse->addData('error','Delete Unsuccessful');
+        	$this->httpresponse->deliver(); exit; 
 		}
-		redirect('Contestant');
+		// redirect('Contestant');
+		
 	}
 
 }
