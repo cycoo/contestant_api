@@ -53,7 +53,7 @@ class Contestant extends CI_Controller {
 		            	$success=($id > 0)?'New Contestant update successfully':'New Contestant added successfully';
 		            	$error=($id > 0)?'Unable to add New Contestant':'Unable to update New Contestant';
                 	
-                	if($_FILES['photo']['name'] !="")
+                	if(isset($_FILES['photo']['name']) && $_FILES['photo']['name'] !="")
 		            {	
 		            	$rand =rand();
 
@@ -87,17 +87,23 @@ class Contestant extends CI_Controller {
 		                		$this->session->set_flashdata('error',$error);
 		                		$this->session->set_flashdata('success',null);
 		                	}
-		            }                    
+		            }
+
+				$this->httpresponse->addData('Contestant','id:-'.$id);
+	        	$this->httpresponse->deliver(); exit;                     
                 }else{
                 	$data['error']='Some information were provided incorrectly';
+                	$this->httpresponse->addData('error','Some information were provided incorrectly');
+        			$this->httpresponse->deliver(); exit; 
                 }
 			
-			$data['districts']=$this->contestant->get_districts();
-			$data['contestants']=$this->contestant->get_all_contestant();
-			$data['active']='contestant';			
-			$this->load->view('header',$data);
-			$this->load->view('index');
-			$this->load->view('footer');          
+			// $data['districts']=$this->contestant->get_districts();
+			// $data['contestants']=$this->contestant->get_all_contestant();
+			// $data['active']='contestant';
+
+			// $this->load->view('header',$data);
+			// $this->load->view('index');
+			// $this->load->view('footer');          
         }
 	}
 
